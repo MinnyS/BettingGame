@@ -11,6 +11,16 @@ namespace BettingGame
 		public char CurrencySymbol { get; private set; } // Symbol for player's currency
         public decimal CurrentBalance { get; private set; } // Amount of money player currently has
 
+		/// <summary>
+		/// Default constructor.
+		/// </summary>
+		public Player()
+		{
+			Name = "anonymous";
+			CurrentBalance = 0.00m;
+			CurrencySymbol = '$';
+		}
+
         /// <summary>
         /// Constructor
         /// </summary>
