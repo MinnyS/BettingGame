@@ -12,51 +12,61 @@ namespace BettingGame
         public decimal CurrentBalance { get; private set; } // Amount of money player currently has
 
 		/// <summary>
-		/// Default constructor.
-		/// </summary>
-		public Player()
-		{
-			Name = "anonymous";
-			CurrentBalance = 0.00m;
-			CurrencySymbol = '$';
-		}
-
-        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="name">Name of player</param>
         /// <param name="currentBalance">Amount of money player has</param>
         /// <param name="currencySymbol">Symbol for player's currency</param>
-        public Player(string name, decimal currentBalance, char currencySymbol='$')
+        public Player(string name="anonymous", char currencySymbol='$', decimal currentBalance = 0)
 		{
 			Name = name;
-			CurrentBalance = currentBalance;
 			CurrencySymbol = currencySymbol;
-		}
+            CurrentBalance = currentBalance;
+        }
 
-		/// <summary>
-		/// Get info about player.
-		/// </summary>
-		/// <returns>Player information</returns>
-		public string GetInfo()
+        /// <summary>
+        /// Get info about player.
+        /// </summary>
+        /// <returns>Player information</returns>
+        public string GetInfo()
 		{
 			return $"{Name} has {CurrentBalanceAsString()}.";
 		}
 
 		/// <summary>
-		/// Get current balance as string with currency symbol.
+		/// Return amount formatted for player's currency system.
 		/// </summary>
-		/// <returns>Current balance as string with currency symbol</returns>
-		public string CurrentBalanceAsString()
+		/// <param name="amount">Amount to format.</param>
+		/// <returns></returns>
+		public string ReturnFormattedAmount(decimal amount)
 		{
-			if(CurrentBalance < 0)
+			// If amount is neutral or positive
+			if(amount >= 0)
 			{
-				return $"-{CurrencySymbol}{(CurrentBalance * -1).ToString()}";
-			}
-			else
+                return $"{CurrencySymbol}{amount.ToString("n2")}";
+            }
+			else // If amount is negative
 			{
-				return $"{CurrencySymbol}{CurrentBalance.ToString()}";
-			}
+                return $"{CurrencySymbol}{(amount * -1).ToString("n2")}";
+            }
+		}
+
+        /// <summary>
+        /// Get current balance as string with currency symbol.
+        /// </summary>
+        /// <returns>Current balance as string with currency symbol</returns>
+        public string CurrentBalanceAsString()
+        {
+            return ReturnFormattedAmount(CurrentBalance); // Return current balance.
+        }
+
+        /// <summary>
+        /// Set current balance.
+        /// </summary>
+        /// <param name="balance">Amount to which to set current balance.</param>
+        public void SetCurrentBalance(decimal balance)
+		{
+			CurrentBalance = balance;
 		}
 
 		/// <summary>
